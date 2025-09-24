@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notify-test
+  labels:
+    app: notify-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notify-test
+  template:
+    metadata:
+      labels:
+        app: notify-test
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notify-test
+spec:
+  selector:
+    app: notify-test
+  ports:
+    - port: 80
+      targetPort: 80
